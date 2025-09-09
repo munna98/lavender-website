@@ -1316,7 +1316,7 @@
           Need help finding the right parts? Our automotive specialists are here
           to help.
         </p>
-        <form class="contact-form">
+        <!-- <form class="contact-form">
           <div class="form-group">
             <input type="text" placeholder="Your Name" required />
             <input type="email" placeholder="Email Address" required />
@@ -1329,7 +1329,24 @@
             placeholder="What parts are you looking for? Include any specific requirements..."
           ></textarea>
           <button type="submit" class="cta-button">Get Free Quote</button>
-        </form>
+        </form> -->
+
+        <form class="contact-form">
+  <div class="form-group">
+    <input type="text" name="name" placeholder="Your Name" required />
+    <input type="email" name="email" placeholder="Email Address" required />
+  </div>
+  <div class="form-group">
+    <input type="text" name="vehicle" placeholder="Vehicle Make & Model" required />
+    <input type="text" name="year" placeholder="Year" required />
+  </div>
+  <textarea
+    name="message"
+    placeholder="What parts are you looking for? Include any specific requirements..."
+  ></textarea>
+  <button type="submit" class="cta-button">Get Free Quote</button>
+</form>
+
       </div>
     </section>
 
@@ -1380,26 +1397,56 @@
       });
 
       // Form submission with animation
-      document
-        .querySelector(".contact-form")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          const button = this.querySelector(".cta-button");
-          const originalText = button.textContent;
+      // document
+      //   .querySelector(".contact-form")
+      //   .addEventListener("submit", function (e) {
+      //     e.preventDefault();
+      //     const button = this.querySelector(".cta-button");
+      //     const originalText = button.textContent;
 
-          button.textContent = "Sending...";
-          button.style.background =
-            "linear-gradient(45deg, var(--lime-green), var(--neon-cyan))";
+      //     button.textContent = "Sending...";
+      //     button.style.background =
+      //       "linear-gradient(45deg, var(--lime-green), var(--neon-cyan))";
 
-          setTimeout(() => {
-            button.textContent = "Quote Sent! ✓";
-            setTimeout(() => {
-              button.textContent = originalText;
-              button.style.background =
-                "linear-gradient(45deg, var(--hot-pink), var(--neon-cyan))";
-            }, 2000);
-          }, 1500);
-        });
+      //     setTimeout(() => {
+      //       button.textContent = "Quote Sent! ✓";
+      //       setTimeout(() => {
+      //         button.textContent = originalText;
+      //         button.style.background =
+      //           "linear-gradient(45deg, var(--hot-pink), var(--neon-cyan))";
+      //       }, 2000);
+      //     }, 1500);
+      //   });
+
+      document.querySelector(".contact-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    const button = this.querySelector(".cta-button");
+    const originalText = button.textContent;
+    button.textContent = "Preparing WhatsApp...";
+    button.style.background = "linear-gradient(45deg, var(--lime-green), var(--neon-cyan))";
+
+    // Collect form data
+    const formData = Object.fromEntries(new FormData(this));
+
+    // Construct WhatsApp message
+    const message = `Hello, I'm ${formData.name}.
+Email: ${formData.email}
+Vehicle: ${formData.vehicle}
+Year: ${formData.year}
+Parts Needed: ${formData.message}`;
+
+    // Your WhatsApp number in international format (no + or spaces)
+    const phone = "971542320960"; 
+    // Redirect to WhatsApp
+    setTimeout(() => {
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, "_blank");
+
+      // Reset button
+      button.textContent = originalText;
+      button.style.background = "linear-gradient(45deg, var(--hot-pink), var(--neon-cyan))";
+    }, 800);
+  });
 
       // Dynamic navbar opacity
       window.addEventListener("scroll", () => {
